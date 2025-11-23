@@ -1,6 +1,6 @@
 # 🟦 ONLINE DONATION APPLICATION
 
-A project for the Struktur Data course, implementing multiple classic data structures (Array, Linked List, Stack, Queue, Tree/BST/AVL) dalam satu aplikasi donasi online berbasis console.
+Suatu project dari mata kuliah struktur data, mengimplementasi berbagai struktur data classic (Array, Linked List, Stack, Queue, Tree/BST/AVL) dalam satu aplikasi donasi online berbasis console.
 
 ---
 
@@ -48,39 +48,46 @@ Tampilkan Menu Utama
 
 ### 📝 Penjelasan Menu
 
-1. Tambah Donasi
-  Urutan pemrosesan:
-  1. Data masuk ke Queue (antrian donatur)
-  2. Setelah diproses → masuk ke Linked List (data utama)
-  3. Data juga disimpan di:
-    - Array (untuk sorting)
-    - Tree / BST / AVL (untuk pencarian)
-    - Stack (riwayat untuk Undo)
+**1. Tambah Donasi**
 
-2. Lihat Semua Donasi
+Urutan pemrosesan:
+- Data masuk ke Queue (antrian donatur)
+- Setelah diproses → masuk ke Linked List (data utama)
+- Data juga disimpan di:
+  - Array (untuk sorting)
+  - Tree / BST / AVL (untuk pencarian)
+  - Stack (riwayat untuk Undo)
+
+**2. Lihat Semua Donasi**
+
 Menampilkan data dari Linked List secara berurutan.
 
-3. Urutkan Donasi
+**3. Urutkan Donasi**
+
 Sorting dapat dilakukan dengan:
 - Algoritma sorting dari Array
 - Atau traversal Inorder dari AVL Tree
 
-4. Undo Donasi Terakhir
+**4. Undo Donasi Terakhir**
+
 - Mengambil data dari Stack
 - Menghapus data terakhir dari Linked List dan Tree
 - Mengembalikan sistem ke kondisi sebelumnya
 
-5. Proses Antrian Donatur
+**5. Proses Antrian Donatur**
+
 - Mengambil data dari Queue (`dequeue`)
 - Memindahkan ke Linked List & Tree
 
-6. Cari Donatur
+**6. Cari Donatur**
+
 Pencarian cepat menggunakan:
 - BST Tree
 atau
 - AVL Tree (lebih optimal)
 
-7. Keluar
+**7. Keluar**
+
 Aplikasi berhenti.
 
 ---
