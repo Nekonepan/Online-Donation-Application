@@ -27,6 +27,17 @@ Suatu project dari mata kuliah struktur data, mengimplementasi berbagai struktur
 
 ## 🏃Cara Run Aplikasi
 
+1. Clone repository
+```
+git clone https://github.com/Nekonepan/Online-Donation-Application.git
+```
+
+2. Navigasi ke folder project
+```
+cd Online-Donation-Application
+```
+
+3. Run file
 - CMD / Git Bash / MSYS2 / MinGW:
 ```
 g++ main.cpp src/*.cpp -o main.exe
