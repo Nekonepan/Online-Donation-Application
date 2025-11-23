@@ -25,6 +25,11 @@ Suatu project dari mata kuliah struktur data, mengimplementasi berbagai struktur
 
 ---
 
+## ⚙️ Requierements
+- g++ (MinGW / MSYS2 / GCC)
+
+---
+
 ## 🏃Cara Run Aplikasi
 
 1. Clone repository
@@ -49,6 +54,8 @@ g++ main.cpp src/*.cpp -o main.exe
 g++ main.cpp (Get-ChildItem -Path src -Filter *.cpp).FullName -o main.exe
 .\main.exe
 ```
+
+---
 
 ## 🧭 Alur Utama Aplikasi
 
