@@ -1,9 +1,6 @@
-#include "../include/BST.h"
+#include <iostream>
+using namespace std;
 
-int tambah(int a, int b) {
-    return a + b;
-}
-
-int kali(int a, int b) {
-    return a * b;
+void insertBST() {
+    cout << "INSERT BST" << endl;
 }
