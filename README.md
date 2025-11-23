@@ -25,6 +25,20 @@ Suatu project dari mata kuliah struktur data, mengimplementasi berbagai struktur
 
 ---
 
+## 🏃Cara Run Aplikasi
+
+- CMD / Git Bash / MSYS2 / MinGW:
+```
+g++ main.cpp src/*.cpp -o main.exe
+./main.exe
+```
+
+- PowerShell:
+```
+g++ main.cpp (Get-ChildItem -Path src -Filter *.cpp).FullName -o main.exe
+.\main.exe
+```
+
 ## 🧭 Alur Utama Aplikasi
 
 Aplikasi bekerja mengikuti alur berikut:
@@ -107,31 +121,4 @@ Linked List (data utama)
 Sorting     Searching
    |           |
   Stack ← (Undo)
-```
-
----
-
-## 🏗️ Struktur Folder
-
-```
-/Online-Donation-Application
-|
-|-- array/
-|   \-- array.cpp
-|
-|-- linkedlist/
-|   \-- linkedlist.cpp
-│
-|-- stack/
-|   \-- stack.cpp
-|
-|-- queue/
-|   \-- queue.cpp
-|
-|-- tree/
-|   \-- bst.cpp
-|   \-- avl.cpp
-|   \-- tree.cpp
-|
-|--- main.cpp
 ```
