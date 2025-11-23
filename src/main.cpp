@@ -1,5 +1,7 @@
 #include <iostream>
-#include "BST.h"
+#include "../include/BST.h"
+
+using namespace std;
 
 int main() {
     std::cout << tambah(5, 3) << std::endl;

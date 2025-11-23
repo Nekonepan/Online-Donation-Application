@@ -1,4 +1,4 @@
-#include "BST.h"
+#include "../include/BST.h"
 
 int tambah(int a, int b) {
     return a + b;
