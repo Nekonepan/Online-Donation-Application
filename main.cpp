@@ -33,6 +33,17 @@ void bst_insert(Donation d);
 Donation* bst_search(int id);
 void bst_remove(int id);
 
+void showMenu() {
+    cout << "=== ONLINE DONATION APPLICATION ===" << endl;
+    cout << "1. Tambah Donasi" << endl;
+    cout << "2. Lihat Semua Donasi" << endl;
+    cout << "3. Urutkan Donasi" << endl;
+    cout << "4. Undo Donasi Terakhir" << endl;
+    cout << "5. Proses Antrian Donatur"  << endl;
+    cout << "6. Cari Donatur" << endl;
+    cout << "7. Keluar" << endl;
+}
+
 /* ========= MENU FUNCTION ========= */
 void showMenu();
 void addDonation();
