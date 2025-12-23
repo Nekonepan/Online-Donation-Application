@@ -5,8 +5,8 @@ using namespace std;
 /* ========= STRUCT BERSAMA ========= */
 struct Donation {
     int id;
-    string name;
-    int amount;
+    string nama;
+    int jumlah;
 };
 
 /* ========= ARRAY ========= */
@@ -44,26 +44,54 @@ void searchDonation();
 
 /* ========= MAIN ========= */
 int main() {
-    int choice;
+    int pilihan;
 
     do {
         showMenu();
-        cout << "Pilih menu: ";
-        cin >> choice;
+        cout << "Pilih menu : ";
+        cin >> pilihan;
 
-        switch (choice) {
-            case 1: addDonation(); break;
-            case 2: showAllDonations(); break;
-            case 3: sortDonations(); break;
-            case 4: undoDonation(); break;
-            case 5: processQueue(); break;
-            case 6: searchDonation(); break;
-            case 7: cout << "Program selesai.\n"; break;
-            default: cout << "Pilihan tidak valid!\n";
+        switch (pilihan) {
+            case 1: {
+                addDonation();
+                break;
+            }
+            
+            case 2: {
+                showAllDonations();
+                break;
+            }
+
+            case 3: {
+                sortDonations();
+                break;
+            }
+
+            case 4: {
+                undoDonation();
+                break;
+            }
+
+            case 5: {
+                processQueue();
+                break;
+            }
+
+            case 6: {
+                searchDonation();
+                break;
+            }
+
+            case 7: {
+                cout << "Program selesai" << endl;
+                break;
+            }
+
+            default: {
+                cout << "Pilihan tidak valid" << endl;
+            }
         }
-        cout << endl;
-
-    } while (choice != 7);
+    } while (pilihan != 7);
 
     return 0;
 }
