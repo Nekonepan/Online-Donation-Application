@@ -21,15 +21,12 @@ NodeLL* head = NULL;
 
 void insertLinkedList(Donasi d) {
     NodeLL* newNode = new NodeLL{d, NULL};
-    if (head == NULL)
-    {
+    if (head == NULL) {
         head = newNode;
     }
-    else
-    {
+    else {
         NodeLL* temp = head;
-        while (temp->next != NULL)
-        {
+        while (temp->next != NULL) {
             temp = temp->next;
         }
         temp->next = newNode;
@@ -37,21 +34,16 @@ void insertLinkedList(Donasi d) {
 }
 
 void hapusTerakhirLL() {
-    if (head == NULL)
-    {
+    if (head == NULL) {
         return;
     }
 
-    if (head->next == NULL)
-    {
+    if (head->next == NULL) {
         delete head;
         head = NULL;
-    }
-    else
-    {
+    } else {
         NodeLL* temp = head;
-        while (temp->next->next != NULL)
-        {
+        while (temp->next->next != NULL) {
             temp = temp->next;
         }
         delete temp->next;
@@ -60,18 +52,14 @@ void hapusTerakhirLL() {
 }
 
 void tampilLinkedList() {
-    if (head == NULL)
-    {
-        cout << "Belum ada donasi\n";
+    if (head == NULL) {
+        cout << "Belum ada donasi" << endl;
         return;
     }
-    cout << "\n=== DATA DONASI (URUTAN ASLI INPUT) ===\n";
+    cout << endl << "=== DATA DONASI (URUTAN ASLI INPUT) ===" << endl;
     NodeLL* temp = head;
-    while (temp != NULL)
-    {
-        cout << temp->data.id << ". "
-             << temp->data.nama
-             << " - Rp" << temp->data.nominal << endl;
+    while (temp != NULL) {
+        cout << temp->data.id << ". " << temp->data.nama << " - Rp" << temp->data.nominal << endl;
         temp = temp->next;
     }
 }
@@ -83,20 +71,16 @@ int totalDonasi = 0;
 void copyLLtoArray() {
     totalDonasi = 0;
     NodeLL* temp = head;
-    while (temp != NULL)
-    {
+    while (temp != NULL) {
         dataDonasi[totalDonasi++] = temp->data;
         temp = temp->next;
     }
 }
 
 void sortAsc() {
-    for (int i = 0; i < totalDonasi - 1; i++)
-    {
-        for (int j = 0; j < totalDonasi - i - 1; j++)
-        {
-            if (dataDonasi[j].nominal > dataDonasi[j + 1].nominal)
-            {
+    for (int i = 0; i < totalDonasi - 1; i++) {
+        for (int j = 0; j < totalDonasi - i - 1; j++) {
+            if (dataDonasi[j].nominal > dataDonasi[j + 1].nominal) {
                 swap(dataDonasi[j], dataDonasi[j + 1]);
             }
         }
@@ -104,12 +88,9 @@ void sortAsc() {
 }
 
 void sortDesc() {
-    for (int i = 0; i < totalDonasi - 1; i++)
-    {
-        for (int j = 0; j < totalDonasi - i - 1; j++)
-        {
-            if (dataDonasi[j].nominal < dataDonasi[j + 1].nominal)
-            {
+    for (int i = 0; i < totalDonasi - 1; i++) {
+        for (int j = 0; j < totalDonasi - i - 1; j++) {
+            if (dataDonasi[j].nominal < dataDonasi[j + 1].nominal) {
                 swap(dataDonasi[j], dataDonasi[j + 1]);
             }
         }
@@ -117,12 +98,9 @@ void sortDesc() {
 }
 
 void tampilArray() {
-    cout << "\n=== TAMPILAN DONASI TERURUT (VIEW SAJA) ===\n";
-    for (int i = 0; i < totalDonasi; i++)
-    {
-        cout << dataDonasi[i].id << ". "
-             << dataDonasi[i].nama
-             << " - Rp" << dataDonasi[i].nominal << endl;
+    cout << endl << "=== TAMPILAN DONASI TERURUT (VIEW SAJA) ===" << endl;
+    for (int i = 0; i < totalDonasi; i++) {
+        cout << dataDonasi[i].id << ". " << dataDonasi[i].nama << " - Rp" << dataDonasi[i].nominal << endl;
     }
 }
 
@@ -136,15 +114,14 @@ void pushUndo(Donasi d) {
 
 void undoDonasi() {
     if (top < 0 || head == NULL) {
-        cout << "Tidak ada donasi untuk di-undo\n";
+        cout << "Tidak ada donasi untuk di-undo" << endl;
         return;
     }
 
     Donasi last = stackUndo[top--];
     hapusTerakhirLL();
 
-    cout << "Undo donasi: " << last.nama
-         << " (Rp" << last.nominal << ")\n";
+    cout << "Undo donasi: " << last.nama << " (Rp" << last.nominal << ")" << endl;
 }
 
 /* ===================== QUEUE (ANTRIAN DONATUR) ===================== */
@@ -157,7 +134,7 @@ void enqueue(string nama) {
 
 void dequeue() {
     if (frontQ > rearQ) {
-        cout << "Antrian donatur kosong\n";
+        cout << "Antrian donatur kosong" << endl;
         return;
     }
     cout << "Memproses donatur: " << queueDonatur[frontQ++] << endl;
@@ -173,32 +150,26 @@ struct Node {
 Node* root = NULL;
 
 Node* insertBST(Node* node, string nama) {
-    if (node == NULL)
-    {
+    if (node == NULL) {
         return new Node{nama, NULL, NULL};
     }
-    if (nama < node->nama)
-    {
+    if (nama < node->nama) {
         node->left = insertBST(node->left, nama);
     }
-    else
-    {
+    else {
         node->right = insertBST(node->right, nama);
     }
     return node;
 }
 
 bool searchBST(Node* node, string nama) {
-    if (node == NULL)
-    {
+    if (node == NULL) {
         return false;
     }
-    if (node->nama == nama)
-    {
+    if (node->nama == nama) {
         return true;
     }
-    if (nama < node->nama)
-    {
+    if (nama < node->nama) {
         return searchBST(node->left, nama);
     }
     return searchBST(node->right, nama);
@@ -206,14 +177,14 @@ bool searchBST(Node* node, string nama) {
 
 /* ===================== MENU ===================== */
 void showMenu() {
-    cout << "\n=== ONLINE DONATION APPLICATION ===\n";
-    cout << "1. Tambah Donasi\n";
-    cout << "2. Lihat Semua Donasi\n";
-    cout << "3. Urutkan Donasi (View)\n";
-    cout << "4. Undo Donasi Terakhir\n";
-    cout << "5. Proses Antrian Donatur\n";
-    cout << "6. Cari Donatur\n";
-    cout << "7. Keluar\n";
+    cout << endl << "=== ONLINE DONATION APPLICATION ===" << endl;
+    cout << "1. Tambah Donasi" << endl;
+    cout << "2. Lihat Semua Donasi" << endl;
+    cout << "3. Urutkan Donasi (View)" << endl;
+    cout << "4. Undo Donasi Terakhir" << endl;
+    cout << "5. Proses Antrian Donatur" << endl;
+    cout << "6. Cari Donatur" << endl;
+    cout << "7. Keluar" << endl;
 }
 
 /* ===================== MAIN ===================== */
@@ -226,66 +197,75 @@ int main() {
         cin >> pilih;
 
         switch (pilih) {
-        case 1: {
-            Donasi d;
-            d.id = autoID++;
+            case 1: {
+                Donasi d;
+                d.id = autoID++;
 
-            cin.ignore();
-            cout << "Nama Donatur : ";
-            getline(cin, d.nama);
-            cout << "Nominal Donasi : ";
-            cin >> d.nominal;
+                cin.ignore();
+                cout << "Nama Donatur : ";
+                getline(cin, d.nama);
+                cout << "Nominal Donasi : ";
+                cin >> d.nominal;
 
-            insertLinkedList(d);     // Linked List
-            pushUndo(d);             // Stack
-            enqueue(d.nama);         // Queue
-            root = insertBST(root, d.nama); // BST
+                insertLinkedList(d);     // Linked List
+                pushUndo(d);             // Stack
+                enqueue(d.nama);         // Queue
+                root = insertBST(root, d.nama); // BST
 
-            cout << "Donasi berhasil ditambahkan\n";
-            break;
-        }
-        case 2:
-            tampilLinkedList();      // DATA ASLI
-            break;
+                cout << "Donasi berhasil ditambahkan" << endl;
+                break;
+            }
+            case 2: {
+                tampilLinkedList();      // DATA ASLI
+                break;
+            }
 
-        case 3: {
-            int p;
-            cout << "\n1. Ascending\n2. Descending\nPilih: ";
-            cin >> p;
+            case 3: {
+                int p;
+                cout << endl << "1. Ascending" << endl << "2. Descending" << endl << "Pilih: ";
+                cin >> p;
 
-            copyLLtoArray();         // COPY SAJA
-            if (p == 2) sortDesc();
-            else sortAsc();
+                copyLLtoArray();         // COPY SAJA
+                if (p == 2) {
+                    sortDesc();
+                } else {
+                    sortAsc();
+                }
 
-            tampilArray();           // VIEW SAJA
-            break;
-        }
-        case 4:
-            undoDonasi();
-            break;
+                tampilArray();           // VIEW SAJA
+                break;
+            }
+            case 4: {
+                undoDonasi();
+                break;
+            }
 
-        case 5:
-            dequeue();
-            break;
+            case 5: {
+                dequeue();
+                break;
+            }
 
-        case 6: {
-            string cari;
-            cin.ignore();
-            cout << "Cari nama donatur: ";
-            getline(cin, cari);
+            case 6: {
+                string cari;
+                cin.ignore();
+                cout << "Cari nama donatur: ";
+                getline(cin, cari);
 
-            if (searchBST(root, cari))
-                cout << "Donatur ditemukan (data historis)\n";
-            else
-                cout << "Donatur tidak ditemukan\n";
-            break;
-        }
-        case 7:
-            cout << "Terima kasih telah menggunakan aplikasi\n";
-            break;
+                if (searchBST(root, cari)) {
+                    cout << "Donatur ditemukan (data historis)" << endl;
+                } else {
+                    cout << "Donatur tidak ditemukan" << endl;
+                }
+                break;
+            }
+            case 7: {
+                cout << "Terima kasih telah menggunakan aplikasi" << endl;
+                break;
+            }
 
-        default:
-            cout << "Menu tidak valid\n";
+            default: {
+                cout << "Menu tidak valid" << endl;
+            }
         }
     } while (pilih != 7);
 
