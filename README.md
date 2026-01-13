@@ -15,8 +15,8 @@ Suatu project dari mata kuliah struktur data, mengimplementasi berbagai struktur
 
 ## 👥 Collaborators
 
-|                                   Contributors                                  |     NIM    |    Jobdesk   |
-|---------------------------------------------------------------------------------|------------|--------------|
+| Contributors                                                                    | NIM        | Jobdesk      |
+| ------------------------------------------------------------------------------- | ---------- | ------------ |
 | Erfannindya Ade Noventyas [(Erfann279)](https://github.com/Erfann279)           | 2300018279 | Array        |
 | Allea Zahva [(allea-prog)](https://github.com/allea-prog)                       | 2400018028 | Linked List  |
 | Dheya Rosicha Ilma [(Ilm4)](https://github.com/Ilm4)                            | 2400018019 | Stack        |
@@ -26,6 +26,7 @@ Suatu project dari mata kuliah struktur data, mengimplementasi berbagai struktur
 ---
 
 ## ⚙️ Requierements
+
 - g++ (MinGW / MSYS2 / GCC)
 
 ---
@@ -33,25 +34,30 @@ Suatu project dari mata kuliah struktur data, mengimplementasi berbagai struktur
 ## 🏃Cara Run Aplikasi
 
 1. Clone repository
+
 ```
 git clone https://github.com/Nekonepan/Online-Donation-Application.git
 ```
 
 2. Navigasi ke folder project
+
 ```
 cd Online-Donation-Application
 ```
 
 3. Run file
+
 - CMD / Git Bash / MSYS2 / MinGW:
+
 ```
-g++ main.cpp src/*.cpp -o main.exe
+g++ main.cpp -o main.exe
 ./main.exe
 ```
 
 - PowerShell:
+
 ```
-g++ main.cpp (Get-ChildItem -Path src -Filter *.cpp).FullName -o main.exe
+g++ main.cpp -o main.exe
 .\main.exe
 ```
 
@@ -60,6 +66,7 @@ g++ main.cpp (Get-ChildItem -Path src -Filter *.cpp).FullName -o main.exe
 ## 🧭 Alur Utama Aplikasi
 
 Aplikasi bekerja mengikuti alur berikut:
+
 ```
 Mulai
   |
@@ -83,6 +90,7 @@ Tampilkan Menu Utama
 **1. Tambah Donasi**
 
 Urutan pemrosesan:
+
 - Data masuk ke Queue (antrian donatur)
 - Setelah diproses → masuk ke Linked List (data utama)
 - Data juga disimpan di:
@@ -97,6 +105,7 @@ Menampilkan data dari Linked List secara berurutan.
 **3. Urutkan Donasi**
 
 Sorting dapat dilakukan dengan:
+
 - Algoritma sorting dari Array
 - Atau traversal Inorder dari AVL Tree
 
@@ -114,8 +123,9 @@ Sorting dapat dilakukan dengan:
 **6. Cari Donatur**
 
 Pencarian cepat menggunakan:
+
 - BST Tree
-atau
+  atau
 - AVL Tree (lebih optimal)
 
 **7. Keluar**
@@ -127,6 +137,7 @@ Aplikasi berhenti.
 ## 🧠 Integrasi Struktur Data
 
 Setiap struktur data bekerja sama seperti ini:
+
 ```
 Input Donasi
    |
