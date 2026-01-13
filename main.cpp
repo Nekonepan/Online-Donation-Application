@@ -8,6 +8,9 @@ struct Donasi {
     int nominal;
 };
 
+/* ===================== AUTO ID ===================== */
+int autoID = 1;
+
 /* ===================== LINKED LIST (DATA UTAMA) ===================== */
 struct NodeLL {
     Donasi data;
@@ -18,31 +21,50 @@ NodeLL* head = NULL;
 
 void insertLinkedList(Donasi d) {
     NodeLL* newNode = new NodeLL{d, NULL};
-    if (head == NULL)
+    if (head == NULL) {
         head = newNode;
+    }
     else {
         NodeLL* temp = head;
-        while (temp->next != NULL)
+        while (temp->next != NULL) {
             temp = temp->next;
+        }
         temp->next = newNode;
+    }
+}
+
+void hapusTerakhirLL() {
+    if (head == NULL) {
+        return;
+    }
+
+    if (head->next == NULL) {
+        delete head;
+        head = NULL;
+    } else {
+        NodeLL* temp = head;
+        while (temp->next->next != NULL) {
+            temp = temp->next;
+        }
+        delete temp->next;
+        temp->next = NULL;
     }
 }
 
 void tampilLinkedList() {
     if (head == NULL) {
-        cout << "Belum ada donasi\n";
+        cout << "Belum ada donasi" << endl;
         return;
     }
+    cout << endl << "=== DATA DONASI (URUTAN ASLI INPUT) ===" << endl;
     NodeLL* temp = head;
     while (temp != NULL) {
-        cout << temp->data.id << ". "
-             << temp->data.nama
-             << " - Rp" << temp->data.nominal << endl;
+        cout << temp->data.id << ". " << temp->data.nama << " - Rp" << temp->data.nominal << endl;
         temp = temp->next;
     }
 }
 
-/* ===================== ARRAY (UNTUK SORTING) ===================== */
+/* ===================== ARRAY (VIEW SORTING SAJA) ===================== */
 Donasi dataDonasi[100];
 int totalDonasi = 0;
 
@@ -55,31 +77,28 @@ void copyLLtoArray() {
     }
 }
 
-void sortDonasiDesc() {
+void sortAsc() {
     for (int i = 0; i < totalDonasi - 1; i++) {
         for (int j = 0; j < totalDonasi - i - 1; j++) {
-            if (dataDonasi[j].nominal < dataDonasi[j + 1].nominal) {
-                Donasi tmp = dataDonasi[j];
-                dataDonasi[j] = dataDonasi[j + 1];
-                dataDonasi[j + 1] = tmp;
+            if (dataDonasi[j].nominal > dataDonasi[j + 1].nominal) {
+                swap(dataDonasi[j], dataDonasi[j + 1]);
             }
         }
     }
 }
 
-void sortDonasiAsc() {
+void sortDesc() {
     for (int i = 0; i < totalDonasi - 1; i++) {
         for (int j = 0; j < totalDonasi - i - 1; j++) {
-            if (dataDonasi[j].nominal > dataDonasi[j + 1].nominal) {
-                Donasi tmp = dataDonasi[j];
-                dataDonasi[j] = dataDonasi[j + 1];
-                dataDonasi[j + 1] = tmp;
+            if (dataDonasi[j].nominal < dataDonasi[j + 1].nominal) {
+                swap(dataDonasi[j], dataDonasi[j + 1]);
             }
         }
     }
 }
 
 void tampilArray() {
+    cout << endl << "=== TAMPILAN DONASI TERURUT (VIEW SAJA) ===" << endl;
     for (int i = 0; i < totalDonasi; i++) {
         cout << dataDonasi[i].id << ". " << dataDonasi[i].nama << " - Rp" << dataDonasi[i].nominal << endl;
     }
@@ -95,24 +114,14 @@ void pushUndo(Donasi d) {
 
 void undoDonasi() {
     if (top < 0 || head == NULL) {
-        cout << "Tidak ada donasi untuk di-undo\n";
+        cout << "Tidak ada donasi untuk di-undo" << endl;
         return;
     }
 
-    // hapus node terakhir linked list
-    if (head->next == NULL) {
-        delete head;
-        head = NULL;
-    } else {
-        NodeLL* temp = head;
-        while (temp->next->next != NULL)
-            temp = temp->next;
-        delete temp->next;
-        temp->next = NULL;
-    }
+    Donasi last = stackUndo[top--];
+    hapusTerakhirLL();
 
-    top--;
-    cout << "Donasi terakhir berhasil di-undo\n";
+    cout << "Undo donasi: " << last.nama << " (Rp" << last.nominal << ")" << endl;
 }
 
 /* ===================== QUEUE (ANTRIAN DONATUR) ===================== */
@@ -125,13 +134,13 @@ void enqueue(string nama) {
 
 void dequeue() {
     if (frontQ > rearQ) {
-        cout << "Antrian donatur kosong\n";
+        cout << "Antrian donatur kosong" << endl;
         return;
     }
     cout << "Memproses donatur: " << queueDonatur[frontQ++] << endl;
 }
 
-/* ===================== TREE (BST PENCARIAN) ===================== */
+/* ===================== TREE (BST HISTORIS PENCARIAN) ===================== */
 struct Node {
     string nama;
     Node* left;
@@ -141,33 +150,41 @@ struct Node {
 Node* root = NULL;
 
 Node* insertBST(Node* node, string nama) {
-    if (node == NULL)
+    if (node == NULL) {
         return new Node{nama, NULL, NULL};
-    if (nama < node->nama)
+    }
+    if (nama < node->nama) {
         node->left = insertBST(node->left, nama);
-    else
+    }
+    else {
         node->right = insertBST(node->right, nama);
+    }
     return node;
 }
 
 bool searchBST(Node* node, string nama) {
-    if (node == NULL) return false;
-    if (node->nama == nama) return true;
-    if (nama < node->nama)
+    if (node == NULL) {
+        return false;
+    }
+    if (node->nama == nama) {
+        return true;
+    }
+    if (nama < node->nama) {
         return searchBST(node->left, nama);
+    }
     return searchBST(node->right, nama);
 }
 
 /* ===================== MENU ===================== */
 void showMenu() {
-    cout << "\n=== ONLINE DONATION APPLICATION ===\n";
-    cout << "1. Tambah Donasi\n";
-    cout << "2. Lihat Semua Donasi\n";
-    cout << "3. Urutkan Donasi\n";
-    cout << "4. Undo Donasi Terakhir\n";
-    cout << "5. Proses Antrian Donatur\n";
-    cout << "6. Cari Donatur\n";
-    cout << "7. Keluar\n";
+    cout << endl << "=== ONLINE DONATION APPLICATION ===" << endl;
+    cout << "1. Tambah Donasi" << endl;
+    cout << "2. Lihat Semua Donasi" << endl;
+    cout << "3. Urutkan Donasi (View)" << endl;
+    cout << "4. Undo Donasi Terakhir" << endl;
+    cout << "5. Proses Antrian Donatur" << endl;
+    cout << "6. Cari Donatur" << endl;
+    cout << "7. Keluar" << endl;
 }
 
 /* ===================== MAIN ===================== */
@@ -180,73 +197,75 @@ int main() {
         cin >> pilih;
 
         switch (pilih) {
-        case 1: {
-            Donasi d;
-            d.id = (head == NULL) ? 1 : (head->data.id + 1);
-            
-            cin.ignore();
-            cout << "Nama Donatur : ";
-            getline(cin, d.nama);
-            cout << "Nominal Donasi : ";
-            cin >> d.nominal;
+            case 1: {
+                Donasi d;
+                d.id = autoID++;
 
-            insertLinkedList(d);        // LINKED LIST
-            pushUndo(d);                // STACK
-            enqueue(d.nama);            // QUEUE
-            root = insertBST(root, d.nama); // TREE
+                cin.ignore();
+                cout << "Nama Donatur : ";
+                getline(cin, d.nama);
+                cout << "Nominal Donasi : ";
+                cin >> d.nominal;
 
-            cout << "Donasi berhasil ditambahkan\n";
-            break;
-        }
-        case 2:
-            tampilLinkedList(); // LINKED LIST
-            break;
+                insertLinkedList(d);     // Linked List
+                pushUndo(d);             // Stack
+                enqueue(d.nama);         // Queue
+                root = insertBST(root, d.nama); // BST
 
-        case 3: {
-            int pilihSort;
-            cout << "Pilih urutan sorting:\n";
-            cout << "1. Ascending (Kecil ke Besar)\n";
-            cout << "2. Descending (Besar ke Kecil)\n";
-            cout << "Pilih: ";
-            cin >> pilihSort;
-
-            copyLLtoArray();    // LINKED LIST → ARRAY
-            if (pilihSort == 1) {
-                sortDonasiAsc();    // ARRAY ASC
-            } else if (pilihSort == 2) {
-                sortDonasiDesc();   // ARRAY DESC
-            } else {
-                cout << "Pilihan tidak valid, menggunakan ascending\n";
-                sortDonasiAsc();
+                cout << "Donasi berhasil ditambahkan" << endl;
+                break;
             }
-            tampilArray();
-            break;
-        }
+            case 2: {
+                tampilLinkedList();      // DATA ASLI
+                break;
+            }
 
-        case 4:
-            undoDonasi();       // STACK + LINKED LIST
-            break;
+            case 3: {
+                int p;
+                cout << endl << "1. Ascending" << endl << "2. Descending" << endl << "Pilih: ";
+                cin >> p;
 
-        case 5:
-            dequeue();          // QUEUE
-            break;
+                copyLLtoArray();         // COPY SAJA
+                if (p == 2) {
+                    sortDesc();
+                } else {
+                    sortAsc();
+                }
 
-        case 6: {
-            string cari;
-            cout << "Masukkan nama donatur: ";
-            cin >> cari;
-            if (searchBST(root, cari))
-                cout << "Donatur ditemukan\n";
-            else
-                cout << "Donatur tidak ditemukan\n";
-            break;
-        }
-        case 7:
-            cout << "Terima kasih telah menggunakan aplikasi\n";
-            break;
+                tampilArray();           // VIEW SAJA
+                break;
+            }
+            case 4: {
+                undoDonasi();
+                break;
+            }
 
-        default:
-            cout << "Menu tidak valid\n";
+            case 5: {
+                dequeue();
+                break;
+            }
+
+            case 6: {
+                string cari;
+                cin.ignore();
+                cout << "Cari nama donatur: ";
+                getline(cin, cari);
+
+                if (searchBST(root, cari)) {
+                    cout << "Donatur ditemukan (data historis)" << endl;
+                } else {
+                    cout << "Donatur tidak ditemukan" << endl;
+                }
+                break;
+            }
+            case 7: {
+                cout << "Terima kasih telah menggunakan aplikasi" << endl;
+                break;
+            }
+
+            default: {
+                cout << "Menu tidak valid" << endl;
+            }
         }
     } while (pilih != 7);
 
