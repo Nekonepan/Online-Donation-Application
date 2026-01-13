@@ -1,6 +1,8 @@
 # 🟦 ONLINE DONATION APPLICATION
 
-Suatu project dari mata kuliah struktur data, mengimplementasi berbagai struktur data classic (Array, Linked List, Stack, Queue, Tree/BST/AVL) dalam satu aplikasi donasi online berbasis console.
+Online Donation Application adalah aplikasi berbasis C++ (console) yang dirancang untuk mensimulasikan sistem pengelolaan donasi secara sederhana namun terstruktur. Aplikasi ini dibuat sebagai proyek pembelajaran Struktur Data, dengan tujuan menerapkan beberapa struktur data utama dalam satu studi kasus yang saling terintegrasi.
+
+Aplikasi memungkinkan pengguna untuk menambahkan donasi, melihat data donasi aktif, mengurutkan donasi, memproses donasi berdasarkan antrian, melakukan undo input terakhir, serta mencari donatur.
 
 ---
 
@@ -10,6 +12,18 @@ Suatu project dari mata kuliah struktur data, mengimplementasi berbagai struktur
 - Mengintegrasikan beberapa struktur data menjadi satu aplikasi yang bekerja secara utuh.
 - Menerapkan konsep OOP dan modular programming.
 - Membuat aplikasi donasi sederhana yang interaktif dan terstruktur.
+
+---
+
+## 🧩 Struktur Data yang Digunakan
+
+| Struktur Data            | Peran dalam Aplikasi                            |
+| ------------------------ | ----------------------------------------------- |
+| Linked List              | Menyimpan data donasi aktif (urutan asli input) |
+| Array                    | Menampilkan data donasi terurut (view only)     |
+| Stack                    | Undo donasi terakhir yang diinput               |
+| Queue                    | Antrian donatur untuk diproses                  |
+| Binary Search Tree (BST) | Pencarian data donatur                          |
 
 ---
 
@@ -76,11 +90,11 @@ Tampilkan Menu Utama
   |
 +----------------------------------------+
 | 1. Tambah Donasi                       |
-| 2. Lihat Semua Donasi                  |
-| 3. Urutkan Donasi                      |
+| 2. Lihat Semua Donasi (Linked-List)    |
+| 3. Urutkan Donasi (Array)              |
 | 4. Undo Donasi Terakhir (Stack)        |
 | 5. Proses Antrian Donatur (Queue)      |
-| 6. Cari Donatur (Tree/BST/AVL)         |
+| 6. Cari Donatur (BST)                  |
 | 7. Keluar                              |
 +----------------------------------------+
 ```
