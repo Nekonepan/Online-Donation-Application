@@ -69,9 +69,7 @@ void sortDonasi() {
 
 void tampilArray() {
     for (int i = 0; i < totalDonasi; i++) {
-        cout << dataDonasi[i].id << ". "
-             << dataDonasi[i].nama
-             << " - Rp" << dataDonasi[i].nominal << endl;
+        cout << dataDonasi[i].id << ". " << dataDonasi[i].nama << " - Rp" << dataDonasi[i].nominal << endl;
     }
 }
 
@@ -173,9 +171,10 @@ int main() {
         case 1: {
             Donasi d;
             d.id = (head == NULL) ? 1 : (head->data.id + 1);
-
+            
+            cin.ignore();
             cout << "Nama Donatur : ";
-            cin >> d.nama;
+            getline(cin, d.nama);
             cout << "Nominal Donasi : ";
             cin >> d.nominal;
 
