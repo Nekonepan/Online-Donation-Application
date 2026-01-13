@@ -1,0 +1,21 @@
+# TODO: Convert Naming Conventions in main-test2.cpp
+
+- [x] Change struct Donasi to donasi
+- [x] Change struct Node to node
+- [x] Change variable names to snake_case:
+  - dataDonasi -> data_donasi
+  - totalDonasi -> total_donasi
+  - stackUndo -> stack_undo
+  - queueDonatur -> queue_donatur
+  - frontQ -> front_q
+  - rearQ -> rear_q
+- [x] Change function names to snake_case:
+  - pushUndo -> push_undo
+  - undoDonasi -> undo_donasi
+  - insertBST -> insert_bst
+  - searchBST -> search_bst
+  - sortDonasi -> sort_donasi
+  - tampilDonasi -> tampil_donasi
+  - showMenu -> show_menu
+- [x] Update all references to the changed names throughout the file
+- [x] Fix compilation errors by adding constructor to node struct
