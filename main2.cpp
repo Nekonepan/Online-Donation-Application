@@ -22,38 +22,53 @@ NodeLL* head = NULL;
 void insertLinkedList(Donasi d) {
     NodeLL* newNode = new NodeLL{d, NULL};
     if (head == NULL)
+    {
         head = newNode;
-    else {
+    }
+    else
+    {
         NodeLL* temp = head;
         while (temp->next != NULL)
+        {
             temp = temp->next;
+        }
         temp->next = newNode;
     }
 }
 
 void hapusTerakhirLL() {
-    if (head == NULL) return;
+    if (head == NULL)
+    {
+        return;
+    }
 
-    if (head->next == NULL) {
+    if (head->next == NULL)
+    {
         delete head;
         head = NULL;
-    } else {
+    }
+    else
+    {
         NodeLL* temp = head;
         while (temp->next->next != NULL)
+        {
             temp = temp->next;
+        }
         delete temp->next;
         temp->next = NULL;
     }
 }
 
 void tampilLinkedList() {
-    if (head == NULL) {
+    if (head == NULL)
+    {
         cout << "Belum ada donasi\n";
         return;
     }
     cout << "\n=== DATA DONASI (URUTAN ASLI INPUT) ===\n";
     NodeLL* temp = head;
-    while (temp != NULL) {
+    while (temp != NULL)
+    {
         cout << temp->data.id << ". "
              << temp->data.nama
              << " - Rp" << temp->data.nominal << endl;
@@ -68,7 +83,8 @@ int totalDonasi = 0;
 void copyLLtoArray() {
     totalDonasi = 0;
     NodeLL* temp = head;
-    while (temp != NULL) {
+    while (temp != NULL)
+    {
         dataDonasi[totalDonasi++] = temp->data;
         temp = temp->next;
     }
@@ -76,24 +92,38 @@ void copyLLtoArray() {
 
 void sortAsc() {
     for (int i = 0; i < totalDonasi - 1; i++)
+    {
         for (int j = 0; j < totalDonasi - i - 1; j++)
+        {
             if (dataDonasi[j].nominal > dataDonasi[j + 1].nominal)
+            {
                 swap(dataDonasi[j], dataDonasi[j + 1]);
+            }
+        }
+    }
 }
 
 void sortDesc() {
     for (int i = 0; i < totalDonasi - 1; i++)
+    {
         for (int j = 0; j < totalDonasi - i - 1; j++)
+        {
             if (dataDonasi[j].nominal < dataDonasi[j + 1].nominal)
+            {
                 swap(dataDonasi[j], dataDonasi[j + 1]);
+            }
+        }
+    }
 }
 
 void tampilArray() {
     cout << "\n=== TAMPILAN DONASI TERURUT (VIEW SAJA) ===\n";
     for (int i = 0; i < totalDonasi; i++)
+    {
         cout << dataDonasi[i].id << ". "
              << dataDonasi[i].nama
              << " - Rp" << dataDonasi[i].nominal << endl;
+    }
 }
 
 /* ===================== STACK (UNDO) ===================== */
@@ -144,19 +174,33 @@ Node* root = NULL;
 
 Node* insertBST(Node* node, string nama) {
     if (node == NULL)
+    {
         return new Node{nama, NULL, NULL};
+    }
     if (nama < node->nama)
+    {
         node->left = insertBST(node->left, nama);
+    }
     else
+    {
         node->right = insertBST(node->right, nama);
+    }
     return node;
 }
 
 bool searchBST(Node* node, string nama) {
-    if (node == NULL) return false;
-    if (node->nama == nama) return true;
+    if (node == NULL)
+    {
+        return false;
+    }
+    if (node->nama == nama)
+    {
+        return true;
+    }
     if (nama < node->nama)
+    {
         return searchBST(node->left, nama);
+    }
     return searchBST(node->right, nama);
 }
 
