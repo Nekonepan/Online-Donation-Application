@@ -104,7 +104,7 @@ void sortDesc() {
 }
 
 void tampilArray() {
-    cout << endl << "=== TAMPILAN DONASI TERURUT (VIEW SAJA) ===" << endl;
+    cout << endl << "=== TAMPILAN DONASI TERURUT (JUMLAH DONASI) ===" << endl;
     for (int i = 0; i < totalDonasi; i++) {
         cout << dataDonasi[i].id << ". " << dataDonasi[i].nama << " - Rp" << dataDonasi[i].nominal << endl;
     }
