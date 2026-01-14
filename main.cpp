@@ -56,10 +56,10 @@ void tampilLinkedList() {
         cout << "Belum ada donasi" << endl;
         return;
     }
-    cout << endl << "=== DATA DONASI (URUTAN ASLI INPUT) ===" << endl;
+    cout << endl << "=== DATA DONASI ===" << endl;
     NodeLL* temp = head;
     while (temp != NULL) {
-        cout << temp->data.id << ". " << temp->data.nama << " - Rp" << temp->data.nominal << endl;
+        cout << "(" << temp->data.id << ") " << temp->data.nama << " - Rp" << temp->data.nominal << endl;
         temp = temp->next;
     }
 }
@@ -81,7 +81,10 @@ void sortAsc() {
     for (int i = 0; i < totalDonasi - 1; i++) {
         for (int j = 0; j < totalDonasi - i - 1; j++) {
             if (dataDonasi[j].nominal > dataDonasi[j + 1].nominal) {
-                swap(dataDonasi[j], dataDonasi[j + 1]);
+                // Manual swap
+                Donasi temp = dataDonasi[j];
+                dataDonasi[j] = dataDonasi[j + 1];
+                dataDonasi[j + 1] = temp;
             }
         }
     }
@@ -91,7 +94,10 @@ void sortDesc() {
     for (int i = 0; i < totalDonasi - 1; i++) {
         for (int j = 0; j < totalDonasi - i - 1; j++) {
             if (dataDonasi[j].nominal < dataDonasi[j + 1].nominal) {
-                swap(dataDonasi[j], dataDonasi[j + 1]);
+                // Manual swap
+                Donasi temp = dataDonasi[j];
+                dataDonasi[j] = dataDonasi[j + 1];
+                dataDonasi[j + 1] = temp;
             }
         }
     }
