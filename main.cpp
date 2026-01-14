@@ -252,7 +252,22 @@ int main() {
                 getline(cin, cari);
 
                 if (searchBST(root, cari)) {
-                    cout << "Donatur ditemukan (data historis)" << endl;
+                    // Cari di linked list untuk detail donasi
+                    NodeLL* temp = head;
+                    bool found = false;
+                    while (temp != NULL) {
+                        if (temp->data.nama == cari) {
+                            cout << "Donatur ditemukan!" << endl;
+                            cout << "Nama Donatur: " << temp->data.nama << endl;
+                            cout << "Jumlah Donasi: Rp" << temp->data.nominal << endl;
+                            found = true;
+                            break;
+                        }
+                        temp = temp->next;
+                    }
+                    if (!found) {
+                        cout << "Donatur tidak ditemukan" << endl;
+                    }
                 } else {
                     cout << "Donatur tidak ditemukan" << endl;
                 }
