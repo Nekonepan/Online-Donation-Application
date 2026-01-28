@@ -24,7 +24,6 @@ struct NodeLL {
 };
 
 NodeLL* head = NULL;
-UndoNode* undoTop = NULL;
 
 void insertLinkedList(Donasi d) {
     NodeLL* newNode = new NodeLL{d, NULL};
@@ -200,6 +199,8 @@ struct UndoNode {
     Donasi data;
     UndoNode* next;
 };
+
+UndoNode* undoTop = NULL;
 
 void pushUndo(UndoNode*& top, Donasi d) {
     UndoNode* newNode = new UndoNode;
