@@ -119,18 +119,16 @@ void tampilArray() {
 
 /* ===================== QUEUE (ANTRIAN DONATUR) ===================== */
 struct QueueNode {
-    string nama;
-    int jumlah;
+    Donasi data;
     QueueNode* next;
 };
 
 QueueNode* frontQueue = NULL;
 QueueNode* rearQueue  = NULL;
 
-void enqueue(QueueNode*& front, QueueNode*& rear, string nama, int jumlah) {
+void enqueue(QueueNode*& front, QueueNode*& rear, Donasi d) {
     QueueNode* newNode = new QueueNode;
-    newNode->nama = nama;
-    newNode->jumlah = jumlah;
+    newNode->data = d;
     newNode->next = NULL;
 
     if (front == NULL) {
@@ -160,7 +158,7 @@ void dequeue(QueueNode*& front, QueueNode*& rear) {
     delete temp;
 }
 
-void undoQueue(QueueNode*& front, QueueNode*& rear, string nama, int jumlah) {
+void undoQueue(QueueNode*& front, QueueNode*& rear, int id) {
     QueueNode* tempFront = NULL;
     QueueNode* tempRear = NULL;
 
@@ -168,8 +166,8 @@ void undoQueue(QueueNode*& front, QueueNode*& rear, string nama, int jumlah) {
         QueueNode* curr = front;
         front = front->next;
 
-        if (!(curr->nama == nama && curr->jumlah == jumlah)) {
-            enqueue(tempFront, tempRear, curr->nama, curr->jumlah);
+        if (curr->data.id != id) {
+            enqueue(tempFront, tempRear, curr->data);
         }
 
         delete curr;
@@ -192,10 +190,10 @@ void prosesAntrianQueue(QueueNode*& front, QueueNode*& rear) {
         QueueNode* current = peekQueue(front);
 
         cout << "\n=== DATA ANTRIAN SAAT INI ===" << endl;
-        cout << "Nama Donatur  : " << current->nama << endl;
-        cout << "Jumlah Donasi : " << current->jumlah << endl;
+        cout << "Nama Donatur  : " << current->data.nama << endl;
+        cout << "Jumlah Donasi : " << current->data.nominal << endl;
 
-        cout << "\nProses antrian (" << current->nama << " - "  << current->jumlah << ")? [Y/N]: ";
+        cout << "\nProses antrian (" << current->data.nama << " - "  << current->data.nominal << ")? [Y/N]: ";
         cin >> pilih;
 
         if (pilih == 'Y' || pilih == 'y') {
@@ -219,30 +217,28 @@ void prosesAntrianQueue(QueueNode*& front, QueueNode*& rear) {
 /* ===================== STACK (UNDO) ===================== */
 
 struct UndoNode {
-    string nama;
-    int jumlah;
+    Donasi data;
     UndoNode* next;
 };
 
-void pushUndo(UndoNode*& top, string nama, int jumlah) {
+void pushUndo(UndoNode*& top, Donasi d) {
     UndoNode* newNode = new UndoNode;
-    newNode->nama = nama;
-    newNode->jumlah = jumlah;
+    newNode->data = d;
     newNode->next = top;
     top = newNode;
 }
 
-bool popUndo(UndoNode*& top, string& nama, int& jumlah) {
-    if (top == NULL) return false;
+Donasi popUndo(UndoNode*& top) {
+    if (top == NULL) {
+        return {-1, "", 0}; // Invalid Donasi
+    }
 
     UndoNode* temp = top;
-    nama = temp->nama;
-    jumlah = temp->jumlah;
+    Donasi d = temp->data;
     top = top->next;
     delete temp;
 
-
-    return true;
+    return d;
 }
 
 void undoLastAction(
@@ -250,38 +246,37 @@ void undoLastAction(
     QueueNode*& frontQueue,
     QueueNode*& rearQueue
 ) {
-    string nama;
-    int jumlah;
+    Donasi d = popUndo(undoTop);
 
-    if (!popUndo(undoTop, nama, jumlah)) {
+    if (d.id == -1) {
         cout << "Tidak ada aksi untuk di-undo.\n";
         return;
     }
 
     hapusTerakhirLL();
-    undoQueue(frontQueue, rearQueue, nama, jumlah);
+    undoQueue(frontQueue, rearQueue, d.id);
 
-    cout << "Undo berhasil untuk donatur: " << nama << " (" << jumlah << ")\n";
+    cout << "Undo berhasil untuk donatur: " << d.nama << " (" << d.nominal << ")\n";
 }
 
 /* ===================== TREE (BST HISTORIS PENCARIAN) ===================== */
 struct Node {
-    string nama;
+    Donasi data;
     Node* left;
     Node* right;
 };
 
 Node* root = NULL;
 
-Node* insertBST(Node* node, string nama) {
+Node* insertBST(Node* node, Donasi d) {
     if (node == NULL) {
-        return new Node{nama, NULL, NULL};
+        return new Node{d, NULL, NULL};
     }
-    if (nama < node->nama) {
-        node->left = insertBST(node->left, nama);
+    if (d.nama < node->data.nama) {
+        node->left = insertBST(node->left, d);
     }
     else {
-        node->right = insertBST(node->right, nama);
+        node->right = insertBST(node->right, d);
     }
     return node;
 }
@@ -290,10 +285,10 @@ bool searchBST(Node* node, string key) {
     if (node == NULL) {
         return false;
     }
-    if (node->nama == key) {
+    if (node->data.nama == key) {
         return true;
     }
-    if (key < node->nama) {
+    if (key < node->data.nama) {
         return searchBST(node->left, key);
     }
     return searchBST(node->right, key);
@@ -333,9 +328,9 @@ int main() {
                 cin.ignore();
 
                 insertLinkedList(d);     // Linked List
-                pushUndo(undoTop, d.nama, d.nominal); //Stack
-                enqueue(frontQueue, rearQueue, d.nama, d.nominal); // Queue
-                root = insertBST(root, d.nama); // BST
+                pushUndo(undoTop, d); //Stack
+                enqueue(frontQueue, rearQueue, d); // Queue
+                root = insertBST(root, d); // BST
 
                 cout << "Donasi berhasil ditambahkan" << endl;
                 break;
