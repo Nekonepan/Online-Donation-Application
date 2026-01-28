@@ -272,27 +272,27 @@ Node* insertBST(Node* node, Donasi d) {
     if (node == NULL) {
         return new Node{d, NULL, NULL};
     }
-    if (d.nama < node->data.nama) {
+    if (d.id < node->data.id) {
         node->left = insertBST(node->left, d);
-    }
-    else {
+    } else {
         node->right = insertBST(node->right, d);
     }
     return node;
 }
 
-bool searchBST(Node* node, string key) {
+Node* searchBST(Node* node, string key) {
     if (node == NULL) {
-        return false;
+        return NULL;
     }
     if (node->data.nama == key) {
-        return true;
+        return node;
     }
     if (key < node->data.nama) {
         return searchBST(node->left, key);
     }
     return searchBST(node->right, key);
 }
+
 
 /* ===================== MENU ===================== */
 void showMenu() {
@@ -371,24 +371,13 @@ int main() {
                 cout << "Cari nama donatur: ";
                 getline(cin, cari);
 
-                if (searchBST(root, cari)) {
-                    // Cari di linked list untuk detail donasi
-                    NodeLL* temp = head;
-                    bool found = false;
-                    while (temp != NULL) {
-                        if (temp->data.nama == cari) {
-                            cout << "Donatur ditemukan!" << endl;
-                            cout << "ID: " << temp->data.id << endl;
-                            cout << "Nama Donatur: " << temp->data.nama << endl;
-                            cout << "Jumlah Donasi: Rp" << temp->data.nominal << endl;
-                            cout << endl;
-                            found = true;
-                        }
-                        temp = temp->next;
-                    }
-                    if (!found) {
-                        cout << "Donatur tidak ditemukan" << endl;
-                    }
+                Node* hasil = searchBST(root, cari);
+
+                if (hasil != NULL) {
+                    cout << "\nDonatur ditemukan!" << endl;
+                    cout << "ID            : " << hasil->data.id << endl;
+                    cout << "Nama Donatur  : " << hasil->data.nama << endl;
+                    cout << "Jumlah Donasi : Rp" << hasil->data.nominal << endl;
                 } else {
                     cout << "Donatur tidak ditemukan" << endl;
                 }
