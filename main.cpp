@@ -264,54 +264,131 @@ struct Node {
     Donasi data;
     Node* left;
     Node* right;
+    int height;
 };
 
 Node* root = NULL;
 
-Node* insertBST(Node* node, Donasi d) {
-    if (node == NULL) {
-        return new Node{d, NULL, NULL};
-    }
-    if (d.nama < node->data.nama) {
-        node->left = insertBST(node->left, d);
+int height(Node* n) {
+    if (n == NULL) {
+        return 0;
     } else {
-        node->right = insertBST(node->right, d);
+        return n->height;
     }
+}
+
+int getBalance(Node* n) {
+    if (n == NULL) return 0;
+    return height(n->left) - height(n->right);
+}
+
+Node* rightRotate(Node* y) {
+    Node* x = y->left;
+    Node* T2 = x->right;
+
+    x->right = y;
+    y->left = T2;
+
+    y->height = max(height(y->left), height(y->right)) + 1;
+    x->height = max(height(x->left), height(x->right)) + 1;
+
+    return x;
+}
+
+Node* leftRotate(Node* x) {
+    Node* y = x->right;
+    Node* T2 = y->left;
+
+    y->left = x;
+    x->right = T2;
+
+    x->height = max(height(x->left), height(x->right)) + 1;
+    y->height = max(height(y->left), height(y->right)) + 1;
+
+    return y;
+}
+
+Node* insertAVL(Node* node, Donasi d) {
+    if (node == NULL)
+        return new Node{d, NULL, NULL, 1};
+
+    if (d.id < node->data.id)
+        node->left = insertAVL(node->left, d);
+    else
+        node->right = insertAVL(node->right, d);
+
+    node->height = 1 + max(height(node->left), height(node->right));
+
+    int balance = getBalance(node);
+
+    // LL
+    if (balance > 1 && d.id < node->left->data.id)
+        return rightRotate(node);
+
+    // RR
+    if (balance < -1 && d.id > node->right->data.id)
+        return leftRotate(node);
+
+    // LR
+    if (balance > 1 && d.id > node->left->data.id) {
+        node->left = leftRotate(node->left);
+        return rightRotate(node);
+    }
+
+    // RL
+    if (balance < -1 && d.id < node->right->data.id) {
+        node->right = rightRotate(node->right);
+        return leftRotate(node);
+    }
+
     return node;
 }
 
-void searchBST(Node* node, string key, bool &found) {
-    if (node == NULL) {
-        return;
-    } 
+// Node* insertBST(Node* node, Donasi d) {
+//     if (node == NULL) {
+//         return new Node{d, NULL, NULL};
+//     }
+//     if (d.nama < node->data.nama) {
+//         node->left = insertBST(node->left, d);
+//     } else {
+//         node->right = insertBST(node->right, d);
+//     }
+//     return node;
+// }
 
-    if (node->data.nama == key) {
-        cout << "\nDonatur ditemukan!" << endl;
-        cout << "ID            : " << node->data.id << endl;
-        cout << "Nama Donatur  : " << node->data.nama << endl;
-        cout << "Jumlah Donasi : Rp" << node->data.nominal << endl;
-        found = true;
+Node* searchBST(Node* node, int keyID) {
+    if (node == NULL) {
+        return NULL;
     }
 
-    // tetap telusuri dua sisi
-    searchBST(node->left, key, found);
-    searchBST(node->right, key, found);
+    if (node->data.id == keyID) {
+        return node;
+    }
+
+    if (keyID < node->data.id) {
+        return searchBST(node->left, keyID);
+    } else {
+        return searchBST(node->right, keyID);
+    }
 }
 
+void cariDonaturByID(Node* root) {
+    int idCari;
+    cout << "Masukkan ID Donatur: ";
+    cin >> idCari;
 
-void cariDonaturBST(Node* root) {
-    string cari;
-    cin.ignore();
-    cout << "Cari nama donatur: ";
-    getline(cin, cari);
+    Node* hasil = searchBST(root, idCari);
 
-    bool found = false;
-    searchBST(root, cari, found);
-
-    if (!found) {
+    if (hasil != NULL) {
+        cout << "\nDonatur ditemukan!" << endl;
+        cout << "ID            : " << hasil->data.id << endl;
+        cout << "Nama Donatur  : " << hasil->data.nama << endl;
+        cout << "Jumlah Donasi : Rp" << hasil->data.nominal << endl;
+    } else {
         cout << "Donatur tidak ditemukan" << endl;
     }
 }
+
 
 
 
@@ -349,9 +426,10 @@ int main() {
                 cin.ignore();
 
                 insertLinkedList(d);     // Linked List
-                pushUndo(undoTop, d); //Stack
+                pushUndo(undoTop, d); // Stack
                 enqueue(frontQueue, rearQueue, d); // Queue
-                root = insertBST(root, d); // BST
+                // root = insertBST(root, d); // BST
+                root = insertAVL(root, d); // AVL
 
                 cout << "Donasi berhasil ditambahkan" << endl;
                 break;
@@ -387,7 +465,7 @@ int main() {
             }
 
             case 6: {
-                cariDonaturBST(root);
+                cariDonaturByID(root);
                 break;
             }
             case 7: {
