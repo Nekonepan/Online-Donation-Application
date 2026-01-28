@@ -168,17 +168,17 @@ Node* insertBST(Node* node, string nama) {
     return node;
 }
 
-bool searchBST(Node* node, string nama) {
+bool searchBST(Node* node, string key) {
     if (node == NULL) {
         return false;
     }
-    if (node->nama == nama) {
+    if (node->nama == key) {
         return true;
     }
-    if (nama < node->nama) {
-        return searchBST(node->left, nama);
+    if (key < node->nama) {
+        return searchBST(node->left, key);
     }
-    return searchBST(node->right, nama);
+    return searchBST(node->right, key);
 }
 
 /* ===================== MENU ===================== */
