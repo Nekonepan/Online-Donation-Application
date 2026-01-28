@@ -344,18 +344,6 @@ Node* insertAVL(Node* node, Donasi d) {
     return node;
 }
 
-// Node* insertBST(Node* node, Donasi d) {
-//     if (node == NULL) {
-//         return new Node{d, NULL, NULL};
-//     }
-//     if (d.nama < node->data.nama) {
-//         node->left = insertBST(node->left, d);
-//     } else {
-//         node->right = insertBST(node->right, d);
-//     }
-//     return node;
-// }
-
 Node* searchBST(Node* node, int keyID) {
     if (node == NULL) {
         return NULL;
