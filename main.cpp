@@ -383,10 +383,11 @@ int main() {
                     while (temp != NULL) {
                         if (temp->data.nama == cari) {
                             cout << "Donatur ditemukan!" << endl;
+                            cout << "ID: " << temp->data.id << endl;
                             cout << "Nama Donatur: " << temp->data.nama << endl;
                             cout << "Jumlah Donasi: Rp" << temp->data.nominal << endl;
+                            cout << endl;
                             found = true;
-                            break;
                         }
                         temp = temp->next;
                     }
