@@ -377,9 +377,6 @@ void cariDonaturByID(Node* root) {
     }
 }
 
-
-
-
 /* ===================== MENU ===================== */
 void showMenu() {
     cout << endl << "=== ONLINE DONATION APPLICATION ===" << endl;
