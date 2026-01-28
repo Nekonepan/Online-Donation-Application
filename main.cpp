@@ -413,7 +413,6 @@ int main() {
                 insertLinkedList(d);     // Linked List
                 pushUndo(undoTop, d); // Stack
                 enqueue(frontQueue, rearQueue, d); // Queue
-                // root = insertBST(root, d); // BST
                 root = insertAVL(root, d); // AVL
 
                 cout << "Donasi berhasil ditambahkan" << endl;
