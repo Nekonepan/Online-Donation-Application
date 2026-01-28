@@ -158,26 +158,6 @@ void dequeue(QueueNode*& front, QueueNode*& rear) {
     delete temp;
 }
 
-void undoQueue(QueueNode*& front, QueueNode*& rear, int id) {
-    QueueNode* tempFront = NULL;
-    QueueNode* tempRear = NULL;
-
-    while (front != NULL) {
-        QueueNode* curr = front;
-        front = front->next;
-
-        if (curr->data.id != id) {
-            enqueue(tempFront, tempRear, curr->data);
-        }
-
-        delete curr;
-    }
-
-    front = tempFront;
-    rear = tempRear;
-}
-
-
 void prosesAntrianQueue(QueueNode*& front, QueueNode*& rear) {
     char pilih;
 
@@ -239,6 +219,25 @@ Donasi popUndo(UndoNode*& top) {
     delete temp;
 
     return d;
+}
+
+void undoQueue(QueueNode*& front, QueueNode*& rear, int id) {
+    QueueNode* tempFront = NULL;
+    QueueNode* tempRear = NULL;
+
+    while (front != NULL) {
+        QueueNode* curr = front;
+        front = front->next;
+
+        if (curr->data.id != id) {
+            enqueue(tempFront, tempRear, curr->data);
+        }
+
+        delete curr;
+    }
+
+    front = tempFront;
+    rear = tempRear;
 }
 
 void undoLastAction(
