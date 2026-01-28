@@ -272,7 +272,7 @@ Node* insertBST(Node* node, Donasi d) {
     if (node == NULL) {
         return new Node{d, NULL, NULL};
     }
-    if (d.id < node->data.id) {
+    if (d.nama < node->data.nama) {
         node->left = insertBST(node->left, d);
     } else {
         node->right = insertBST(node->right, d);
@@ -280,18 +280,39 @@ Node* insertBST(Node* node, Donasi d) {
     return node;
 }
 
-Node* searchBST(Node* node, string key) {
+void searchBST(Node* node, string key, bool &found) {
     if (node == NULL) {
-        return NULL;
-    }
+        return;
+    } 
+
     if (node->data.nama == key) {
-        return node;
+        cout << "\nDonatur ditemukan!" << endl;
+        cout << "ID            : " << node->data.id << endl;
+        cout << "Nama Donatur  : " << node->data.nama << endl;
+        cout << "Jumlah Donasi : Rp" << node->data.nominal << endl;
+        found = true;
     }
-    if (key < node->data.nama) {
-        return searchBST(node->left, key);
-    }
-    return searchBST(node->right, key);
+
+    // tetap telusuri dua sisi
+    searchBST(node->left, key, found);
+    searchBST(node->right, key, found);
 }
+
+
+void cariDonaturBST(Node* root) {
+    string cari;
+    cin.ignore();
+    cout << "Cari nama donatur: ";
+    getline(cin, cari);
+
+    bool found = false;
+    searchBST(root, cari, found);
+
+    if (!found) {
+        cout << "Donatur tidak ditemukan" << endl;
+    }
+}
+
 
 
 /* ===================== MENU ===================== */
@@ -366,21 +387,7 @@ int main() {
             }
 
             case 6: {
-                string cari;
-                cin.ignore();
-                cout << "Cari nama donatur: ";
-                getline(cin, cari);
-
-                Node* hasil = searchBST(root, cari);
-
-                if (hasil != NULL) {
-                    cout << "\nDonatur ditemukan!" << endl;
-                    cout << "ID            : " << hasil->data.id << endl;
-                    cout << "Nama Donatur  : " << hasil->data.nama << endl;
-                    cout << "Jumlah Donasi : Rp" << hasil->data.nominal << endl;
-                } else {
-                    cout << "Donatur tidak ditemukan" << endl;
-                }
+                cariDonaturBST(root);
                 break;
             }
             case 7: {
