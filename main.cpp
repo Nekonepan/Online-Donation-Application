@@ -1,5 +1,11 @@
 #include <iostream>
+#include <string>
 using namespace std;
+
+// Forward declarations
+struct Node;
+struct QueueNode;
+struct UndoNode;
 
 /* ===================== STRUCT DONASI ===================== */
 struct Donasi {
@@ -18,6 +24,7 @@ struct NodeLL {
 };
 
 NodeLL* head = NULL;
+UndoNode* undoTop = NULL;
 
 void insertLinkedList(Donasi d) {
     NodeLL* newNode = new NodeLL{d, NULL};
@@ -110,28 +117,7 @@ void tampilArray() {
     }
 }
 
-/* ===================== STACK (UNDO) ===================== */
-Donasi stack[100];
-int top = -1;
-
-void pushStack(Donasi d) {
-    stack[++top] = d;
-}
-
-void undoDonasi() {
-    if (top < 0 || head == NULL) {
-        cout << "Tidak ada donasi untuk di-undo" << endl;
-        return;
-    }
-
-    Donasi last = stack[top--];
-    hapusTerakhirLL();
-
-    cout << "Undo donasi: " << last.nama << " (Rp" << last.nominal << ")" << endl;
-}
-
 /* ===================== QUEUE (ANTRIAN DONATUR) ===================== */
-
 struct QueueNode {
     string nama;
     int jumlah;
@@ -174,6 +160,26 @@ void dequeue(QueueNode*& front, QueueNode*& rear) {
     delete temp;
 }
 
+void undoQueue(QueueNode*& front, QueueNode*& rear, string nama, int jumlah) {
+    QueueNode* tempFront = NULL;
+    QueueNode* tempRear = NULL;
+
+    while (front != NULL) {
+        QueueNode* curr = front;
+        front = front->next;
+
+        if (!(curr->nama == nama && curr->jumlah == jumlah)) {
+            enqueue(tempFront, tempRear, curr->nama, curr->jumlah);
+        }
+
+        delete curr;
+    }
+
+    front = tempFront;
+    rear = tempRear;
+}
+
+
 void prosesAntrianQueue(QueueNode*& front, QueueNode*& rear) {
     char pilih;
 
@@ -210,6 +216,75 @@ void prosesAntrianQueue(QueueNode*& front, QueueNode*& rear) {
         cout << "\nSemua antrian donasi sudah diproses.\n";
     }
 }
+/* ===================== STACK (UNDO) ===================== */
+
+struct UndoNode {
+    string nama;
+    int jumlah;
+    UndoNode* next;
+};
+
+void pushUndo(UndoNode*& top, string nama, int jumlah) {
+    UndoNode* newNode = new UndoNode;
+    newNode->nama = nama;
+    newNode->jumlah = jumlah;
+    newNode->next = top;
+    top = newNode;
+}
+
+bool popUndo(UndoNode*& top, string& nama, int& jumlah) {
+    if (top == NULL) return false;
+
+    UndoNode* temp = top;
+    nama = temp->nama;
+    jumlah = temp->jumlah;
+    top = top->next;
+    delete temp;
+
+
+    return true;
+}
+
+void undoLastAction(
+    UndoNode*& undoTop,
+    QueueNode*& frontQueue,
+    QueueNode*& rearQueue
+) {
+    string nama;
+    int jumlah;
+
+    if (!popUndo(undoTop, nama, jumlah)) {
+        cout << "Tidak ada aksi untuk di-undo.\n";
+        return;
+    }
+
+    hapusTerakhirLL();
+    undoQueue(frontQueue, rearQueue, nama, jumlah);
+
+    cout << "Undo berhasil untuk donatur: " << nama << " (" << jumlah << ")\n";
+}
+
+
+// Donasi stack[100];
+// int top = -1;
+
+// void pushStack(Donasi d) {
+//     stack[++top] = d;
+// }
+
+// void undoDonasi() {
+//     if (top < 0 || head == NULL) {
+//         cout << "Tidak ada donasi untuk di-undo" << endl;
+//         return;
+//     }
+
+//     Donasi last = stack[top--];
+//     hapusTerakhirLL();
+
+//     cout << "Undo donasi: " << last.nama << " (Rp" << last.nominal << ")" << endl;
+// }
+
+
 
 /* ===================== TREE (BST HISTORIS PENCARIAN) ===================== */
 struct Node {
@@ -277,9 +352,11 @@ int main() {
                 getline(cin, d.nama);
                 cout << "Nominal Donasi : ";
                 cin >> d.nominal;
+                cin.ignore(); // Clear the newline left by cin
 
                 insertLinkedList(d);     // Linked List
-                pushStack(d);             // Stack
+                pushUndo(undoTop, d.nama, d.nominal);
+                // pushStack(d);
                 enqueue(frontQueue, rearQueue, d.nama, d.nominal); // Queue
                 root = insertBST(root, d.nama); // BST
 
@@ -307,7 +384,7 @@ int main() {
                 break;
             }
             case 4: {
-                undoDonasi();
+                undoLastAction(undoTop, frontQueue, rearQueue);
                 break;
             }
 
