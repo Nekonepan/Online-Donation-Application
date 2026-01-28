@@ -264,28 +264,6 @@ void undoLastAction(
     cout << "Undo berhasil untuk donatur: " << nama << " (" << jumlah << ")\n";
 }
 
-
-// Donasi stack[100];
-// int top = -1;
-
-// void pushStack(Donasi d) {
-//     stack[++top] = d;
-// }
-
-// void undoDonasi() {
-//     if (top < 0 || head == NULL) {
-//         cout << "Tidak ada donasi untuk di-undo" << endl;
-//         return;
-//     }
-
-//     Donasi last = stack[top--];
-//     hapusTerakhirLL();
-
-//     cout << "Undo donasi: " << last.nama << " (Rp" << last.nominal << ")" << endl;
-// }
-
-
-
 /* ===================== TREE (BST HISTORIS PENCARIAN) ===================== */
 struct Node {
     string nama;
@@ -352,11 +330,10 @@ int main() {
                 getline(cin, d.nama);
                 cout << "Nominal Donasi : ";
                 cin >> d.nominal;
-                cin.ignore(); // Clear the newline left by cin
+                cin.ignore();
 
                 insertLinkedList(d);     // Linked List
-                pushUndo(undoTop, d.nama, d.nominal);
-                // pushStack(d);
+                pushUndo(undoTop, d.nama, d.nominal); //Stack
                 enqueue(frontQueue, rearQueue, d.nama, d.nominal); // Queue
                 root = insertBST(root, d.nama); // BST
 
