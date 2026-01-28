@@ -27,18 +27,6 @@ Aplikasi memungkinkan pengguna untuk menambahkan donasi, melihat data donasi akt
 
 ---
 
-## 👥 Collaborators
-
-| Contributors                                                                    | NIM        | Jobdesk      |
-| ------------------------------------------------------------------------------- | ---------- | ------------ |
-| Erfannindya Ade Noventyas [(Erfann279)](https://github.com/Erfann279)           | 2300018279 | Array        |
-| Allea Zahva [(allea-prog)](https://github.com/allea-prog)                       | 2400018028 | Linked List  |
-| Dheya Rosicha Ilma [(Ilm4)](https://github.com/Ilm4)                            | 2400018019 | Stack        |
-| Dhiva Anindya Untsa Layalya [(dhivaanindyaa)](https://github.com/dhivaanindyaa) | 2400018001 | Queue        |
-| Lutfan Alaudin Naja [(Nekonepan)](https://github.com/Nekonepan)                 | 2400018032 | Tree/BST/AVL |
-
----
-
 ## ⚙️ Requierements
 
 - g++ (MinGW / MSYS2 / GCC)
@@ -165,3 +153,23 @@ Sorting     Searching
    |           |
   Stack ← (Undo)
 ```
+
+---
+
+## 🤝 Credits
+
+Institusi : Universitas Ahmad Dahlan Daerah Istimewa Yogyakarta
+
+Mata Kuliah : Struktur Data
+
+Dosen : Dr. Ardiansyah, S.T., M.Cs.
+
+Tujuan Pengembangan : Proyek Akademi
+
+| Contributors                                                                    | NIM        | Jobdesk      | Github Profile |
+| ------------------------------------------------------------------------------- | ---------- | ------------ |----------------|
+| Erfannindya Ade Noventyas                                                       | 2300018279 | Array        | [(Erfann279)](https://github.com/Erfann279) |
+| Allea Zahva                                                                     | 2400018028 | Linked List  | [(allea-prog)](https://github.com/allea-prog) |
+| Dheya Rosicha Ilma                                                              | 2400018019 | Stack        | [(Ilm4)](https://github.com/Ilm4) |
+| Dhiva Anindya Untsa Layalya                                                     | 2400018001 | Queue        | [(dhivaanindyaa)](https://github.com/dhivaanindyaa) |
+| Lutfan Alaudin Naja                                                             | 2400018032 | Tree/BST/AVL | [(Nekonepan)](https://github.com/Nekonepan) |
