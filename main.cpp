@@ -111,11 +111,11 @@ void tampilArray() {
 }
 
 /* ===================== STACK (UNDO) ===================== */
-Donasi stackUndo[100];
+Donasi stack[100];
 int top = -1;
 
-void pushUndo(Donasi d) {
-    stackUndo[++top] = d;
+void pushStack(Donasi d) {
+    stack[++top] = d;
 }
 
 void undoDonasi() {
@@ -124,26 +124,91 @@ void undoDonasi() {
         return;
     }
 
-    Donasi last = stackUndo[top--];
+    Donasi last = stack[top--];
     hapusTerakhirLL();
 
     cout << "Undo donasi: " << last.nama << " (Rp" << last.nominal << ")" << endl;
 }
 
 /* ===================== QUEUE (ANTRIAN DONATUR) ===================== */
-string queueDonatur[100];
-int frontQ = 0, rearQ = -1;
 
-void enqueue(string nama) {
-    queueDonatur[++rearQ] = nama;
+struct QueueNode {
+    string nama;
+    int jumlah;
+    QueueNode* next;
+};
+
+QueueNode* frontQueue = NULL;
+QueueNode* rearQueue  = NULL;
+
+void enqueue(QueueNode*& front, QueueNode*& rear, string nama, int jumlah) {
+    QueueNode* newNode = new QueueNode;
+    newNode->nama = nama;
+    newNode->jumlah = jumlah;
+    newNode->next = NULL;
+
+    if (front == NULL) {
+        front = rear = newNode;
+    } else {
+        rear->next = newNode;
+        rear = newNode;
+    }
 }
 
-void dequeue() {
-    if (frontQ > rearQ) {
-        cout << "Antrian donatur kosong" << endl;
+QueueNode* peekQueue(QueueNode* front) {
+    return front; // NULL kalau kosong
+}
+
+void dequeue(QueueNode*& front, QueueNode*& rear) {
+    if (front == NULL) {
         return;
     }
-    cout << "Memproses donatur: " << queueDonatur[frontQ++] << endl;
+
+    QueueNode* temp = front;
+    front = front->next;
+
+    if (front == NULL) {
+        rear = NULL;
+    }
+
+    delete temp;
+}
+
+void prosesAntrianQueue(QueueNode*& front, QueueNode*& rear) {
+    char pilih;
+
+    if (front == NULL) {
+        cout << "Tidak ada antrian donasi.\n";
+        return;
+    }
+
+    while (front != NULL) {
+        QueueNode* current = peekQueue(front);
+
+        cout << "\n=== DATA ANTRIAN SAAT INI ===" << endl;
+        cout << "Nama Donatur  : " << current->nama << endl;
+        cout << "Jumlah Donasi : " << current->jumlah << endl;
+
+        cout << "\nProses antrian (" << current->nama << " - "  << current->jumlah << ")? [Y/N]: ";
+        cin >> pilih;
+
+        if (pilih == 'Y' || pilih == 'y') {
+            dequeue(front, rear);
+            cout << "Antrian berhasil diproses." << endl;
+
+        } else if (pilih == 'N' || pilih == 'n') {
+            cout << "Proses antrian dihentikan." << endl;
+            break;
+
+        } else {
+            cout << "Pilihan tidak valid!" << endl;
+            break;
+        }
+    }
+
+    if (front == NULL) {
+        cout << "\nSemua antrian donasi sudah diproses.\n";
+    }
 }
 
 /* ===================== TREE (BST HISTORIS PENCARIAN) ===================== */
@@ -214,8 +279,8 @@ int main() {
                 cin >> d.nominal;
 
                 insertLinkedList(d);     // Linked List
-                pushUndo(d);             // Stack
-                enqueue(d.nama);         // Queue
+                pushStack(d);             // Stack
+                enqueue(frontQueue, rearQueue, d.nama, d.nominal); // Queue
                 root = insertBST(root, d.nama); // BST
 
                 cout << "Donasi berhasil ditambahkan" << endl;
@@ -247,7 +312,7 @@ int main() {
             }
 
             case 5: {
-                dequeue();
+                prosesAntrianQueue(frontQueue, rearQueue);
                 break;
             }
 
