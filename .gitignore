@@ -1,2 +1,25 @@
+# ===== C++ Build Files =====
+*.o
+*.obj
+*.out
 *.exe
+
+# Linux executables
+main
+a.out
+
+# Build folders
+build/
+cmake-build-*/
+
+# VS Code
 .vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+*.bak
+rekap_layanan_barbershop.txt
+data_karyawan.txt
+data_karyawan_2.txt
